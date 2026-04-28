@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UNION GEO — Strategy & Competitor Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" />
+<script>
+  const TWEAKS = /*EDITMODE-BEGIN*/{
+    "accent": "#4F46E5",
+    "theme": "light",
+    "density": "comfortable"
+  }/*EDITMODE-END*/;
+</script>
+<style>
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-SemiBold.otf') format('opentype'); font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Mersad'; src: url('fonts/Mersad-ExtraBold.otf') format('opentype'); font-weight: 800; font-style: normal; font-display: swap; }
+  :root {
+    --accent: #4F46E5;
+    --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+    --accent-ink: color-mix(in oklab, var(--accent) 85%, black);
+    --bg: #FAFAF7;
+    --bg-2: #F2F2EC;
+    --panel: #FFFFFF;
+    --ink: #0A0A0A;
+    --ink-2: #2B2B2B;
+    --muted: #6B6B66;
+    --line: #E5E4DD;
+    --line-strong: #111111;
+    --ok: #0E7A4D;
+    --warn: #B45309;
+    --bad: #B91C1C;
+    --radius: 4px;
+    --gutter: 24px;
+    --maxw: 1360px;
+  }
+  [data-theme="dark"] {
+    --bg: #0C0C0C;
+    --bg-2: #141414;
+    --panel: #161616;
+    --ink: #F5F5F0;
+    --ink-2: #D4D4CE;
+    --muted: #8C8C85;
+    --line: #262626;
+    --line-strong: #F5F5F0;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Mersad', 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv11";
+    line-height: 1.5;
+  }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-feature-settings: "zero","ss01"; letter-spacing: -0.01em; }
+  .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+  a { color: inherit; }
+
+  /* ——————————————————— Layout ——————————————————— */
+  .shell { display: grid; grid-template-columns: 220px 1fr; gap: 0; min-height: 100vh; }
+  @media (max-width: 960px) { .shell { grid-template-columns: 1fr; } }
+
+  /* Side nav */
+  .sidenav {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    padding: 28px 20px;
+    border-right: 1px solid var(--line);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 50;
+  }
+  @media (max-width: 960px) {
+    .sidenav { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--line); padding: 16px 24px; }
+  }
+  .brand {
+    display: flex; flex-direction: column; gap: 4px;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  }
+  .brand-mark { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 13px; }
+  .brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; display:inline-block; }
+  .sidenav ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+  .sidenav a {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 8px 10px; border-radius: var(--radius);
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .sidenav a:hover { color: var(--ink); background: var(--bg-2); }
+  .sidenav a.active { color: var(--ink); border-left-color: var(--accent); background: var(--bg-2); }
+  .sidenav a .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); min-width: 24px; }
+  .sidenav a.active .num { color: var(--accent); }
+  .sidenav-foot { margin-top: auto; font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .kbd { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 5px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 3px; }
+
+  .main { min-width: 0; }
+
+  /* ——————————————————— Section frame ——————————————————— */
+  section {
+    padding: 96px clamp(24px, 5vw, 80px);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  [data-density="compact"] section { padding: 56px clamp(20px, 4vw, 60px); }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    align-items: baseline;
+    margin-bottom: 56px;
+    max-width: var(--maxw);
+  }
+  @media (max-width: 720px) { .section-head { grid-template-columns: 1fr; gap: 12px; } }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+  .sh-title h2 { font-size: clamp(32px, 4.2vw, 52px); line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 12px; font-weight: 600; }
+  .sh-title p { font-size: 17px; color: var(--muted); max-width: 62ch; margin: 0; }
+  .sh-kicker { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+
+  .container { max-width: var(--maxw); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ——————————————————— Hero ——————————————————— */
+  .hero {
+    padding: 36px clamp(24px, 5vw, 80px) 80px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-top {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding-bottom: 56px;
+  }
+  .hero-top .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--panel);
+  }
+  .hero-top .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); display:inline-block; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  .hero h1 {
+    font-size: clamp(52px, 9vw, 140px);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    margin: 0 0 24px;
+    max-width: 16ch;
+  }
+  .hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.02em; }
+
+  .hero-sub {
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    max-width: var(--maxw);
+  }
+  @media (max-width: 860px) { .hero-sub { grid-template-columns: 1fr; gap: 24px; } }
+  .hero-sub .lede { font-size: 20px; line-height: 1.4; color: var(--ink-2); max-width: 52ch; }
+  .hero-meta { display: flex; flex-direction: column; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .hero-meta div { display: flex; justify-content: space-between; gap: 24px; border-bottom: 1px dashed var(--line); padding: 6px 0; }
+  .hero-meta span:last-child { color: var(--ink); }
+
+  .hero-stats {
+    margin-top: 64px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line);
+    max-width: var(--maxw);
+  }
+  @media (max-width: 860px) { .hero-stats { grid-template-columns: repeat(2,1fr); } }
+  .hero-stat {
+    padding: 28px 24px 28px 0;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .v { font-size: clamp(34px, 4vw, 48px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .hero-stat .v sup { font-size: 16px; color: var(--accent); vertical-align: super; margin-left: 2px; font-weight: 500; }
+  .hero-stat .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 10px; }
+
+  /* Background grid pattern */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
+  }
+  .hero > * { position: relative; }
+
+  /* ——————————————————— Common components ——————————————————— */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+  .tag { display: inline-flex; align-items: center; gap: 6px; font-family:'JetBrains Mono', monospace; font-size: 10.5px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag.bist { border-color: var(--accent); color: var(--accent); }
+  .tag.bga { border-color: var(--ink); color: var(--ink); }
+
+  .dl { display: grid; grid-template-columns: 180px 1fr; gap: 10px 24px; font-size: 14px; }
+  .dl dt { color: var(--muted); font-family:'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 2px; }
+  .dl dd { margin: 0; color: var(--ink-2); }
+
+  .pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+  .pill.ok { background: color-mix(in oklab, var(--ok) 12%, transparent); color: var(--ok); }
+  .pill.warn { background: color-mix(in oklab, var(--warn) 15%, transparent); color: var(--warn); }
+  .pill.bad { background: color-mix(in oklab, var(--bad) 12%, transparent); color: var(--bad); }
+  .pill.accent { background: var(--accent-soft); color: var(--accent-ink); }
+
+  /* Abstract geometric placeholder */
+  .placeholder {
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .placeholder svg { display:block; width: 100%; height: 100%; }
+  .placeholder-label {
+    position: absolute; left: 12px; bottom: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;
+    background: var(--panel); padding: 3px 7px; border: 1px solid var(--line); border-radius: 3px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--ink); background: var(--ink); color: var(--bg);
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn.accent { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* ——————————————————— Audit section ——————————————————— */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .comp-table thead th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .comp-table tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .comp-table tbody tr.focus td {
+    background: var(--accent-soft);
+  }
+  .comp-table tbody tr.focus td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+  .comp-table .school-name { font-weight: 600; }
+  .comp-table .bar-cell { width: 180px; }
+  .comp-table .bar { display: block; height: 6px; border-radius: 999px; background: var(--bg-2); position: relative; overflow: hidden; }
+  .comp-table .bar i { display: block; height: 100%; background: var(--ink); border-radius: 999px; }
+  .comp-table tr.focus .bar i { background: var(--accent); }
+
+  .pain-col { display: flex; flex-direction: column; gap: 12px; }
+  .pain-item {
+    display: grid; grid-template-columns: 40px 1fr auto; gap: 12px;
+    padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--panel);
+    align-items: start;
+  }
+  .pain-item .idx { font-family:'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); padding-top: 2px; }
+  .pain-item .bd { font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+  .pain-item .bd strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  /* Opportunities cards */
+  .opp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 900px) { .opp-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .opp-grid { grid-template-columns: 1fr; } }
+  .opp {
+    background: var(--panel);
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 180px;
+    transition: background .2s ease;
+  }
+  .opp:hover { background: var(--bg-2); }
+  .opp .n { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; }
+  .opp h4 { font-size: 18px; margin: 4px 0; font-weight: 600; letter-spacing: -0.015em; }
+  .opp p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ——————————————————— Brand tabs (BIST/BGA) ——————————————————— */
+  .brand-tabs { display: flex; gap: 4px; padding: 4px; background: var(--bg-2); border-radius: 999px; border: 1px solid var(--line); width: fit-content; margin-bottom: 32px; }
+  .brand-tabs button {
+    border: 0; background: transparent; padding: 8px 18px; border-radius: 999px;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--muted); cursor: pointer; transition: all .2s;
+  }
+  .brand-tabs button.active { background: var(--ink); color: var(--bg); }
+
+  /* ICP */
+  .icp {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--panel);
+    overflow: hidden;
+  }
+  @media (max-width: 820px) { .icp { grid-template-columns: 1fr; } }
+  .icp-head {
+    padding: 28px;
+    background: var(--bg-2);
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  @media (max-width: 820px) { .icp-head { border-right: 0; border-bottom: 1px solid var(--line); } }
+  .icp-avatar {
+    height: 160px; border-radius: var(--radius); position: relative;
+  }
+  .icp-name { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-top: 4px; }
+  .icp-name small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .icp-body { padding: 28px; display: grid; grid-template-columns: repeat(2,1fr); gap: 28px; }
+  @media (max-width: 620px) { .icp-body { grid-template-columns: 1fr; } }
+  .icp-block h5 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; font-weight: 500; }
+  .icp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--ink-2); }
+  .icp-list li::before { content: "—"; color: var(--accent); margin-right: 8px; }
+
+  /* Funnel */
+  .funnel {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    background: var(--panel);
+    transition: background .2s;
+  }
+  .funnel:last-child { border-bottom: 1px solid var(--line); }
+  .funnel:hover { background: var(--bg-2); }
+  .funnel .stage { display: flex; flex-direction: column; gap: 2px; }
+  .funnel .stage .label { font-size: 14px; font-weight: 600; }
+  .funnel .stage .count { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .funnel .bar { height: 36px; background: var(--bg-2); border-radius: var(--radius); position: relative; overflow: hidden; }
+  .funnel .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--accent) 55%, var(--ink))); border-radius: var(--radius); }
+  .funnel .bar .rate { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--ink); mix-blend-mode: difference; filter: invert(1); }
+  .funnel .channels { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+  @media (max-width: 820px) {
+    .funnel { grid-template-columns: 1fr; }
+    .funnel .channels { text-align: left; }
+  }
+
+  /* Timeline */
+  .tl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 900px) { .tl { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .tl { grid-template-columns: 1fr; } }
+  .tl-col {
+    padding: 22px 20px;
+    border-right: 1px solid var(--line);
+    background: var(--panel);
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 260px;
+  }
+  .tl-col:last-child { border-right: 0; }
+  .tl-col .phase { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .tl-col .phase .m { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .tl-col .phase .t { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .tl-col ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+  .tl-col ul li { display: flex; gap: 8px; }
+  .tl-col ul li::before { content: "›"; color: var(--accent); font-family:'JetBrains Mono', monospace; }
+
+  /* Channel strategy */
+  .channels-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .channels-tbl th, .channels-tbl td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .channels-tbl th { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; border-bottom-color: var(--line-strong); }
+  .channels-tbl .ch-name { font-weight: 600; }
+  .channels-tbl .pct { display: flex; align-items: center; gap: 10px; }
+  .channels-tbl .pct .bar { height: 6px; width: 90px; background: var(--bg-2); border-radius: 999px; position: relative; overflow: hidden; }
+  .channels-tbl .pct .bar i { display:block; height: 100%; background: var(--accent); border-radius: 999px; }
+  .channels-tbl .pct .n { font-family:'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* Outcomes */
+  .outcomes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line); }
+  @media (max-width: 820px) { .outcomes { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px) { .outcomes { grid-template-columns: 1fr; } }
+  .outc {
+    padding: 32px 24px;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 6px;
+    position: relative;
+  }
+  .outc:nth-child(3n) { border-right: 0; }
+  .outc .v { font-size: clamp(34px, 4.2vw, 52px); font-weight: 600; letter-spacing: -0.035em; line-height: 1; }
+  .outc .v.accent { color: var(--accent); }
+  .outc .l { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .outc .sub { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Brand architecture split */
+  .arch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  @media (max-width: 760px) { .arch { grid-template-columns: 1fr; } }
+  .arch-col { background: var(--panel); padding: 32px 28px; display: flex; flex-direction: column; gap: 16px; }
+  .arch-col .label { font-family:'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+  .arch-col h4 { font-size: 22px; margin: 0; letter-spacing: -0.02em; font-weight: 600; max-width: 22ch; }
+  .arch-shared { grid-column: 1 / -1; background: var(--bg-2); padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; }
+  .arch-shared strong { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  /* Digital ecosystem grid: SEO+GEO, CRM, etc */
+  .eco-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .eco-grid > * { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .eco-seo { grid-column: span 6; }
+  .eco-geo { grid-column: span 6; }
+  .eco-web { grid-column: span 8; }
+  .eco-an { grid-column: span 4; }
+  .eco-social { grid-column: span 6; }
+  .eco-content { grid-column: span 6; }
+  .eco-crm { grid-column: span 12; }
+  @media (max-width: 960px) { .eco-grid > * { grid-column: 1 / -1 !important; } }
+  .eco-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  .eco-head h4 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+  .eco-head .tag { margin-left: auto; }
+
+  .kv { display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+  .kv div { display: flex; gap: 10px; }
+  .kv div::before { content:"›"; color: var(--accent); font-family:'JetBrains Mono', monospace; }
+
+  /* CRM lifecycle */
+  .crm {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+  @media (max-width: 1100px) { .crm { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 640px) { .crm { grid-template-columns: repeat(2, 1fr); } }
+  .crm-step {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 14px; background: var(--bg); display: flex; flex-direction: column; gap: 6px;
+    position: relative;
+  }
+  .crm-step .n { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .crm-step .t { font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .crm-step .d { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+
+  /* Retention */
+  .ret-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  @media (max-width: 720px) { .ret-grid { grid-template-columns: 1fr; } }
+  .ret-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; position: relative; min-height: 180px; }
+  .ret-card .icon { width: 40px; height: 40px; border-radius: 8px; background: var(--accent-soft); display: grid; place-items: center; margin-bottom: 16px; }
+  .ret-card h4 { margin: 0 0 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+  .ret-card p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+  /* 90-day */
+  .day-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 820px) { .day-grid { grid-template-columns: 1fr; } }
+  .day-col { padding: 26px 24px; border-right: 1px solid var(--line); background: var(--panel); display:flex; flex-direction: column; gap: 14px; }
+  .day-col:last-child { border-right: 0; }
+  .day-col .days { font-family:'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .day-col h4 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.02em; font-weight: 600; }
+
+  /* Quick wins flow */
+  .qw { display: grid; grid-template-columns: repeat(3, 1fr) 40px; gap: 0; align-items: stretch; }
+  @media (max-width: 900px) { .qw { grid-template-columns: 1fr; } }
+  .qw-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .qw-card .step { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .qw-card h4 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+  .qw-card ul { padding: 0; margin: 4px 0 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--ink-2); }
+  .qw-card ul li { display: flex; gap: 8px; }
+  .qw-card ul li::before { content:"—"; color: var(--muted); }
+  .qw-card .out { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); }
+  .qw-arrow { display: grid; place-items: center; color: var(--muted); }
+  @media (max-width: 900px) { .qw-arrow { display: none; } }
+
+  /* Team */
+  .team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 960px) { .team { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .team { grid-template-columns: 1fr; } }
+  .tmb { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; gap: 10px; min-height: 260px; }
+  .tmb:nth-child(4n) { border-right: 0; }
+  @media (max-width: 960px) { .tmb:nth-child(2n) { border-right: 0; } .tmb:nth-child(4n) { border-right: 1px solid var(--line); } }
+  .tmb .role { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .tmb h4 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+  .tmb ul { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--ink-2); }
+  .tmb ul li::before { content:"·"; color: var(--accent); margin-right: 8px; }
+  .tmb .owns { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.04em; }
+
+  /* Value props */
+  .vprops { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 820px) { .vprops { grid-template-columns: 1fr; } }
+  .vprop { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+  .vprop h4 { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; font-weight: 600; }
+  .vprop .sub { color: var(--muted); font-size: 13.5px; margin-bottom: 18px; }
+  .vprop ol { padding-left: 0; margin: 0; list-style: none; counter-reset: vp; display: flex; flex-direction: column; gap: 10px; }
+  .vprop ol li { counter-increment: vp; padding-left: 32px; position: relative; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+  .vprop ol li::before { content: counter(vp, decimal-leading-zero); position: absolute; left: 0; top: 2px; font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); }
+
+  /* Common pain grid */
+  .common-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .common-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .common-grid { grid-template-columns: 1fr; } }
+  .common-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px; min-height: 180px; }
+  .common-card .bang { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--bad); letter-spacing: 0.06em; text-transform: uppercase; }
+  .common-card h4 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+  .common-card p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* Footer */
+  footer {
+    padding: 72px clamp(24px, 5vw, 80px) 48px;
+    background: var(--ink);
+    color: var(--bg);
+  }
+  [data-theme="dark"] footer { background: var(--panel); }
+  footer .ft-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; max-width: var(--maxw); }
+  @media (max-width: 820px) { footer .ft-top { grid-template-columns: 1fr; } }
+  footer h3 { font-size: clamp(36px, 5vw, 72px); margin: 0 0 16px; letter-spacing: -0.035em; font-weight: 500; line-height: 1; }
+  footer h3 em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); font-weight: 400; }
+  footer .ft-row { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  footer .ft-row .btn.accent { background: var(--accent); border-color: var(--accent); color: white; }
+  footer .ft-row .btn.ghost { background: transparent; color: var(--bg); border-color: color-mix(in oklab, var(--bg) 40%, transparent); }
+  footer .meta { font-family:'JetBrains Mono', monospace; font-size: 12px; color: color-mix(in oklab, var(--bg) 60%, transparent); display:flex; flex-direction: column; gap: 6px; }
+  footer .meta a { text-decoration: underline; text-underline-offset: 3px; }
+  footer .credit { margin-top: 56px; padding-top: 24px; border-top: 1px solid color-mix(in oklab, var(--bg) 20%, transparent); font-family:'JetBrains Mono', monospace; font-size: 11px; color: color-mix(in oklab, var(--bg) 55%, transparent); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: var(--maxw); }
+
+  /* Tweaks panel */
+  .tweaks-panel {
+    position: fixed; right: 24px; bottom: 24px; z-index: 100;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px; width: 280px;
+    box-shadow: 0 20px 40px -16px rgba(0,0,0,0.12);
+    font-size: 13px;
+    display: none;
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-panel h5 { margin: 0 0 12px; font-size: 12px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+  .tweak-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; }
+  .tweak-row label { font-size: 13px; color: var(--ink-2); }
+  .tweak-row .opts { display: flex; gap: 4px; }
+  .tweak-row .opts button, .color-swatch {
+    border: 1px solid var(--line); background: var(--bg); padding: 4px 10px;
+    border-radius: 6px; font-size: 11.5px; font-family:'JetBrains Mono', monospace;
+    color: var(--muted); cursor: pointer;
+  }
+  .tweak-row .opts button.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .color-swatch { width: 26px; height: 26px; padding: 0; border-radius: 50%; }
+  .color-swatch.active { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  /* Video thumbs */
+  .video-thumb { position: relative; cursor: pointer; display: block; }
+  .video-thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.18);
+    transition: background .2s ease;
+    pointer-events: none;
+  }
+  .video-thumb:hover::after { background: rgba(0,0,0,0.32); }
+  .video-thumb .play-btn {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    display: grid; place-items: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    z-index: 2;
+    transition: transform .2s ease;
+  }
+  .video-thumb:hover .play-btn { transform: translate(-50%, -50%) scale(1.08); }
+  .video-thumb .play-btn::before {
+    content: ""; width: 0; height: 0;
+    border-left: 14px solid var(--ink);
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+
+  /* Lightbox */
+  .lb-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.85); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .lb-overlay.open { display: flex; }
+  .lb-box {
+    max-width: 1100px; width: 100%; max-height: 90vh;
+    background: var(--panel); border-radius: 8px; overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .lb-box img { display: block; max-width: 100%; max-height: 75vh; object-fit: contain; margin: 0 auto; background: #000; }
+  .lb-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 20px; border-top: 1px solid var(--line);
+  }
+  .lb-foot .lb-cap { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .lb-foot .lb-actions { display: flex; gap: 10px; }
+  .lb-fb {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 999px;
+    background: #1877F2; color: #fff; text-decoration: none;
+    font-size: 13.5px; font-weight: 500;
+    border: 1px solid #1877F2;
+  }
+  .lb-fb:hover { opacity: 0.92; }
+  .lb-close {
+    background: transparent; border: 1px solid var(--line); color: var(--ink);
+    padding: 10px 16px; border-radius: 999px; font-size: 13.5px; cursor: pointer;
+  }
+
+  /* Media grids */
+  .media-grid { display: grid; gap: 16px; margin-top: 16px; }
+  .media-grid.cols-1 { grid-template-columns: 1fr; }
+  .media-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .media-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 760px) { .media-grid.cols-2, .media-grid.cols-3 { grid-template-columns: 1fr; } }
+  .media-grid figure { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
+  .media-grid img { display: block; width: 100%; height: auto; }
+  .media-grid figcaption { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); padding: 8px 12px; border-top: 1px solid var(--line); letter-spacing: 0.04em; text-transform: uppercase; }
+  .media-hero { width: 100%; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); margin-top: 16px; }
+  .media-hero img { display: block; width: 100%; height: auto; }
+
+  /* Utility */
+  .hr { border-top: 1px dashed var(--line); margin: 40px 0; }
+  .hl { color: var(--accent); }
+  .note { font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+</style>
+</head>
+<body data-theme="light" data-density="comfortable">
+
+<div class="shell">
+
+  <!-- ================== SIDE NAV ================== -->
+  <aside class="sidenav" aria-label="Section navigation">
+    <div class="brand">
+      <div class="brand-mark"><span class="brand-dot"></span> UNION GEO</div>
+      <div>For UNIONGEO · 2026</div>
+    </div>
+    <ol>
+      <li><a href="#competitors" data-section="competitors"><span class="num">01</span>კონკურენტები</a></li>
+      <li><a href="#belle" data-section="belle"><span class="num">02</span>Belle Maison</a></li>
+      <li><a href="#avenue" data-section="avenue"><span class="num">03</span>Design Avenue</a></li>
+      <li><a href="#castello" data-section="castello"><span class="num">04</span>Castello</a></li>
+      <li><a href="#content-lines" data-section="content-lines"><span class="num">05</span>Video Content</a></li>
+      <li><a href="#recommendations" data-section="recommendations"><span class="num">06</span>რეკომენდაციები</a></li>
+      <li><a href="#meta-budget" data-section="meta-budget"><span class="num">07</span>ბიუჯეტის განაწილება</a></li>
+      <li><a href="#messaging-flow" data-section="messaging-flow"><span class="num">08</span>Messaging Flow</a></li>
+      <li><a href="#creative" data-section="creative"><span class="num">09</span>კრეატივი და ფორმატები</a></li>
+      <li><a href="#b2b" data-section="b2b"><span class="num">10</span>B2B მიმართულება</a></li>
+    </ol>
+    <div class="sidenav-foot">
+      <div>PRESENTATION BY GROWTH HUNTERS</div>
+      <div style="margin-top:4px;">2026 · For UNIONGEO</div>
+      <div style="margin-top:12px;"><span class="kbd">T</span> tweaks · <span class="kbd">D</span> dark</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ================== HERO ================== -->
+    <section class="hero" id="top">
+      <div class="hero-top">
+        <div class="chip"><span class="dot"></span><span>Meta Ads (Facebook &amp; Instagram)</span></div>
+        <div>For UNIONGEO · 2026</div>
+      </div>
+
+      <h1>
+        UNION<br/>
+        <em>GEO.</em>
+      </h1>
+
+      <div class="hero-sub">
+        <p class="lede">
+          საქართველოს ბაზარზე არსებული კონკურენტების ანალიზი, სოც. მედია კონტენტის მიმართულებით.
+        </p>
+        <div class="hero-meta">
+          <div><span>Document</span><span>კონკურენტები · For UNIONGEO</span></div>
+          <div><span>Channel</span><span>Meta Ads (Facebook &amp; Instagram)</span></div>
+          <div><span>ბიუჯეტი</span><span>$1,800 / თვე</span></div>
+          <div><span>Author</span><span>PRESENTATION BY GROWTH HUNTERS</span></div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="v">$1,800</div><div class="k">ბიუჯეტი / თვე</div></div>
+        <div class="hero-stat"><div class="v">30<sup>%</sup></div><div class="k">TOF · Awareness</div></div>
+        <div class="hero-stat"><div class="v">20<sup>%</sup></div><div class="k">MOF · Consideration</div></div>
+        <div class="hero-stat"><div class="v">50<sup>%</sup></div><div class="k">BOF · Conversion</div></div>
+      </div>
+    </section>
+
+    <!-- ================== 01 COMPETITORS ================== -->
+    <section id="competitors">
+      <div class="section-head">
+        <div class="eyebrow">§ 01 / კონკურენტები</div>
+        <div class="sh-title">
+          <h2>კონკურენტები.<br/><span class="serif">For UNIONGEO.</span></h2>
+          <p>საქართველოს ბაზარზე არსებული კონკურენტების ანალიზი, სოც. მედია კონტენტის მიმართულებით.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="sh-kicker" style="margin-bottom:14px;">კონკურენტები · Tbilisi</div>
+        <div style="overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background: var(--panel);">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th style="width:200px;">ბრენდი</th>
+                <th>პოზიციონირება</th>
+                <th>ბრენდები · ბაზარი</th>
+                <th style="width:220px;">საიტი</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="focus">
+                <td class="school-name">Belle Maison</td>
+                <td>Direct, Luxury Doors · იცხოვრე მოხდენილად</td>
+                <td>Davide Groppi · Ariostea · Flexform · GESSI · ATC.</td>
+                <td><a href="https://bellemaison.ge/en" target="_blank" rel="noopener">bellemaison.ge/en</a></td>
+              </tr>
+              <tr class="focus">
+                <td class="school-name">Design Avenue</td>
+                <td>Multi-brand Italian showroom · 2006 წლიდან</td>
+                <td>ავეჯი · კერამიკა · სანტექნიკა · კარები · პარკეტი · სამზარეულო · განათება</td>
+                <td><a href="https://www.designavenue.ge/about-us.php?ge" target="_blank" rel="noopener">designavenue.ge</a></td>
+              </tr>
+              <tr class="focus">
+                <td class="school-name">Castello · კასტელო</td>
+                <td>Tbilisi's leading ultra-luxury Italian furniture showroom · 2018 წლიდან</td>
+                <td>Moroso · Diesel Living · Bretz · Gervasoni 1882 · Galimberti Nino · Laura Meroni · ATC.</td>
+                <td><a href="https://castello.ge/ge/about/" target="_blank" rel="noopener">castello.ge</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin-top:10px;">PRESENTATION BY GROWTH HUNTERS · For UNIONGEO</div>
+        <div class="media-hero" style="margin-top:32px;"><img src="media/image1.jpeg" alt="კონკურენტები · Slide 01 cover" loading="lazy"/></div>
+      </div>
+    </section>
+
+    <!-- ================== 02 BELLE MAISON ================== -->
+    <section id="belle">
+      <div class="section-head">
+        <div class="eyebrow">§ 02 / Belle Maison</div>
+        <div class="sh-title">
+          <h2>Belle Maison.<br/><span class="serif">Direct, Luxury Doors</span> — იცხოვრე მოხდენილად.</h2>
+          <p>პრემიუმ ხაზის, სახლის ავეჯის ბრენდი საქართველოში, რომელიც მომხმარებელს სივრცის მოსაწყობად თითქმის ყველა ტიპის ავეჯს სთავაზობს, განსხვავებული პრემიუმ მწარმოებლების კოლაბორაციით, მათ შორის: 𝗗𝗮𝘃𝗶𝗱𝗲 𝗚𝗿𝗼𝗽𝗽𝗶, Ariostea, Flexform, GESSI, ATC. გარდა ამისა, კომპანია უზრუნველყოფს სრული სივრცის მოწყობას.</p>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="media-hero"><img src="media/image2.png" alt="Belle Maison · brand cover" loading="lazy"/></div>
+
+        <div class="hr"></div>
+
+        <!-- 01 სტატიები -->
+        <div class="sh-kicker" style="margin-bottom:14px;">01 სტატიები</div>
+        <div class="media-grid cols-1"><figure><img src="media/image3.png" alt="Belle Maison · სტატიები" loading="lazy"/><figcaption>Slide 03 · სტატიები</figcaption></figure></div>
+        <div class="vprops">
+          <div class="vprop">
+            <h4>კომპანია ხშირად აზიარებს განსხვავებული ტიპის სტატიებს, მათ შორის:</h4>
+            <div class="sub">თითოეული სტატია ეშვება Ad-ზე, მიზანი: Awareness, engagement.</div>
+            <ol>
+              <li>Oikos-ის ოფიციალური შოურუმი Belle Maison - ში გაიხსნა;</li>
+              <li>Baxter – როდესაც ხელოვნება თქვენს სახლში ცოცხლდება;</li>
+              <li>MEDIA News | PARQUETS in Belle Maison – ხის პარკეტი, რომელიც წლების შემდეგაც გვიყვარს;</li>
+            </ol>
+          </div>
+          <div class="vprop">
+            <h4>02 Video</h4>
+            <div class="sub">კომპანია აქტიურად აწარმოებს ვიდეო კონტენტს განსხვავებული მიმართულებებით:</div>
+            <ol>
+              <li>სთოქის ვიდეოები, მუსიკით;</li>
+              <li>ქარველი და უცხოელი დიზაინერების შესახებ;</li>
+              <li>შოურუმის შესახებ;</li>
+              <li>პრეზენტაციები;</li>
+              <li>დეტალებზე ორიენტირებული მინი რილები;</li>
+              <li>თითოეული მათგანის ძირითადი ობჯექთივია: Awareness, engagement; Send Message.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="media-grid cols-3">
+          <figure class="video-thumb" data-fb="https://www.facebook.com/bellemaison.ge" data-caption="Belle Maison · Video"><img src="media/image4.jpeg" alt="Belle Maison video still 1" loading="lazy"/><figcaption>Slide 04 · Video</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/bellemaison.ge" data-caption="Belle Maison · Video"><img src="media/image5.jpeg" alt="Belle Maison video still 2" loading="lazy"/><figcaption>Slide 04 · Video</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/bellemaison.ge" data-caption="Belle Maison · Video"><img src="media/image6.jpeg" alt="Belle Maison video still 3" loading="lazy"/><figcaption>Slide 04 · Video</figcaption></figure>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- 03 Static Post -->
+        <div class="sh-kicker" style="margin-bottom:14px;">03 Static Post</div>
+        <div class="media-grid cols-2">
+          <figure><img src="media/image7.png" alt="Belle Maison static grid" loading="lazy"/><figcaption>Slide 05 · Static Post</figcaption></figure>
+          <figure><img src="media/image8.png" alt="Belle Maison static grid" loading="lazy"/><figcaption>Slide 05 · Static Post</figcaption></figure>
+        </div>
+        <div class="arch">
+          <div class="arch-col">
+            <span class="label">ფორმატები</span>
+            <h4>გრიდი · სტატიკი</h4>
+          </div>
+          <div class="arch-col">
+            <span class="label">თემები</span>
+            <h4>დიზაინერები · პროდუქტი · სიახლეები · პრეზენტაციები · პროექტები</h4>
+          </div>
+          <div class="arch-shared">
+            <strong>მიზანი</strong>
+            <span>Send message</span>
+            <span>·</span>
+            <span>Awareness</span>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Ads Library -->
+        <div class="sh-kicker" style="margin-bottom:14px;">Ads Library · აქტიური რეკლამა რეალურ დროში</div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Ads Library</h3>
+            <p>კომპანიას ამ ჟამად აქტიური აქვს მხოლოდ ერთი, კარუსელის ტიპის ედი, მიუხედავად იმისა, რომ პერიოდულობით აქტიურად აწარმოებენ რეკლამირებას, რასაც პოსტებზე ჩართულობითა და Send Message ღილაკუით ვხედავთ.</p>
+          </div>
+          <div class="card">
+            <h3>საიტი GEO\ENG</h3>
+            <p><a href="https://bellemaison.ge/en" target="_blank" rel="noopener">https://bellemaison.ge/en</a></p>
+          </div>
+        </div>
+        <div class="media-grid cols-1"><figure><img src="media/image9.png" alt="Belle Maison Ads Library" loading="lazy"/><figcaption>Slide 06 · Ads Library</figcaption></figure></div>
+
+      </div>
+    </section>
+
+    <!-- ================== 03 DESIGN AVENUE ================== -->
+    <section id="avenue">
+      <div class="section-head">
+        <div class="eyebrow">§ 03 / Design Avenue</div>
+        <div class="sh-title">
+          <h2>Design Avenue.<br/><span class="serif">Multi-brand</span> Italian showroom.</h2>
+          <p>2006 წელს დაფუძნებული კომანია, რომელიც მომხმარებელს სთავაზობს განსხვავებული ტიპის ავეჯს, მათ შორის: ავეჯი, კერამიკა, სანტექნიკა, კარები, პარკეტი, სამზარეულო, განათება, დიზაინ სტუდია საერთაშრისო დონის პერსონალთან ერთად. პროექტირების გარდა, კომპანია დამკვეთს ასევე ვთავაზობთ სარემონტო და სამშენებლო სამუაშოების შესარულებას.</p>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="media-hero"><img src="media/image10.png" alt="Design Avenue · brand cover" loading="lazy"/></div>
+
+        <div class="hr"></div>
+
+        <!-- 01 Video -->
+        <div class="sh-kicker" style="margin-bottom:14px;">01 Video</div>
+        <div class="vprops">
+          <div class="vprop">
+            <h4>კომპანია პერმანენტულად აწარმოებს ვიდეო კონტენტს განსხვავებული მიმართულებებით:</h4>
+            <ol>
+              <li>სთოქის ვიდეოები, მუსიკით;</li>
+              <li>პროცესის ამსახველი ვიდეოები, როგორიცაა პარკეტის დაგება.</li>
+              <li>პროექტზე მუშაობის ამსახველი ვიდეოები;</li>
+              <li>დასრულებული პროექტები;</li>
+              <li>დეტალებზე ორიენტირებული მინი რილები;</li>
+              <li>იშვიათად, ვიდეოები სფიქერთან ერთად.</li>
+              <li>თითოეული მათგანის ძირითადი ობჯექთივია: Send Message.</li>
+            </ol>
+          </div>
+          <div class="vprop">
+            <h4>02 Static Post</h4>
+            <div class="sub">გრიდი · სტატიკი · კარუსელი</div>
+            <ol>
+              <li>თემები: პროდუქტი</li>
+              <li>თემები: პროექტები</li>
+              <li>თემები: პრეზენტაციები</li>
+              <li>თემები: მისალოცი ღონისძიებები</li>
+              <li>მიზანი: Send message</li>
+              <li>მიზანი: Awareness - იშვიათად</li>
+            </ol>
+          </div>
+        </div>
+        <div class="media-grid cols-3">
+          <figure class="video-thumb" data-fb="https://www.facebook.com/designavenue.ge" data-caption="Design Avenue · Video"><img src="media/image11.jpeg" alt="Design Avenue video still 1" loading="lazy"/><figcaption>Slide 08 · Video</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/designavenue.ge" data-caption="Design Avenue · Video"><img src="media/image12.jpeg" alt="Design Avenue video still 2" loading="lazy"/><figcaption>Slide 08 · Video</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/designavenue.ge" data-caption="Design Avenue · Video"><img src="media/image13.jpeg" alt="Design Avenue video still 3" loading="lazy"/><figcaption>Slide 08 · Video</figcaption></figure>
+        </div>
+        <div class="media-grid cols-2" style="margin-top:16px;">
+          <figure><img src="media/image14.png" alt="Design Avenue static grid" loading="lazy"/><figcaption>Slide 09 · Static Post</figcaption></figure>
+          <figure><img src="media/image15.png" alt="Design Avenue static grid" loading="lazy"/><figcaption>Slide 09 · Static Post</figcaption></figure>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Ads Library -->
+        <div class="sh-kicker" style="margin-bottom:14px;">Ads Library · აქტიური რეკლამა რეალურ დროში</div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Ads Library</h3>
+            <p>კომპანიას ამ ჟამად აქტიური აქვს სამი ტიპის კარუსელის, რასაც პოსტებზე ჩართულობითა და Send Message ღილაკუით ვხედავთ.</p>
+          </div>
+          <div class="card">
+            <h3>საიტი GEO\ENG</h3>
+            <p><a href="https://www.designavenue.ge/about-us.php?ge" target="_blank" rel="noopener">https://www.designavenue.ge/about-us.php?ge</a></p>
+          </div>
+        </div>
+        <div class="media-grid cols-3">
+          <figure><img src="media/image16.png" alt="Design Avenue ad 1" loading="lazy"/><figcaption>Slide 10 · Ads Library</figcaption></figure>
+          <figure><img src="media/image17.png" alt="Design Avenue ad 2" loading="lazy"/><figcaption>Slide 10 · Ads Library</figcaption></figure>
+          <figure><img src="media/image18.png" alt="Design Avenue ad 3" loading="lazy"/><figcaption>Slide 10 · Ads Library</figcaption></figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================== 04 CASTELLO ================== -->
+    <section id="castello">
+      <div class="section-head">
+        <div class="eyebrow">§ 04 / Castello · კასტელო</div>
+        <div class="sh-title">
+          <h2>Castello · კასტელო.<br/><span class="serif">Tbilisi's leading</span> ultra-luxury Italian furniture showroom.</h2>
+          <p>ავეჯის, განათებისა და აქსესუარების მულტიბრენდული შოურუმი Castello, 2018 წლიდან არის წამყვანი იტალიური ავეჯის მწარმოებელი კომპანიების ოფიციალური დილერი და რითეილერი საქართველოში. მომხმარებელს სთავაზობს საშუალო & პრემიუმ-კლასის ავეჯის სეგმენტში, ისეთ ბრენდებს, როგორიცაა: Moroso, Diesel Living, Bretz, Gervasoni 1882, Galimberti Nino, Laura Meroni, ATC.</p>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="media-hero"><img src="media/image19.png" alt="Castello · brand cover" loading="lazy"/></div>
+
+        <div class="hr"></div>
+
+        <!-- 01 Video -->
+        <div class="sh-kicker" style="margin-bottom:14px;">01 Video</div>
+        <div class="vprops">
+          <div class="vprop">
+            <h4>კომპანია პერმანენტულად აწარმოებს ვიდეო კონტენტს განსხვავებული მიმართულებებით:</h4>
+            <ol>
+              <li>სთოქის ვიდეოები, მუსიკით;</li>
+              <li>ბრენტის Top Level მენეჯერები ყვებიან ბრენდის შესახებ;</li>
+              <li>შოურუმი;</li>
+              <li>დეტალებზე ორიენტირებული მინი რილები;</li>
+              <li>სიახლეები შოურუმში</li>
+              <li>თითოეული მათგანის ძირითადი ობჯექთივია: Send Message; Awareness, engagement - იშვიათად.</li>
+              <li>დამატება: ბოლო პერიოდში აქვეყნებენ ჰორიზონტალურ ვიდეოებს, თუმცა აქტიურად აქვეყნებენ რილის [ვერტიკალური] ფორმატის ვიდეო მასალას.</li>
+            </ol>
+          </div>
+          <div class="vprop">
+            <h4>02 Static Post</h4>
+            <div class="sub">გრიდი · სტატიკი · კარუსელი</div>
+            <ol>
+              <li>თემები: პროდუქტი</li>
+              <li>თემები: შოურუმი</li>
+              <li>თემები: ბრენდების კონცეფცია</li>
+              <li>თემები: შეთავაზებები კონკრეტული დღეების ჭრილში;</li>
+              <li>თემები: დიზაინერები.</li>
+              <li>მიზანი: Send message</li>
+              <li>მიზანი: Awareness - იშვიათად</li>
+            </ol>
+          </div>
+        </div>
+        <div class="media-grid cols-2">
+          <figure class="video-thumb" data-fb="https://www.facebook.com/castello.ge" data-caption="Castello · Video"><img src="media/image20.jpeg" alt="Castello video still 1" loading="lazy"/><figcaption>Slide 12 · Video</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/castello.ge" data-caption="Castello · Video"><img src="media/image21.jpeg" alt="Castello video still 2" loading="lazy"/><figcaption>Slide 12 · Video</figcaption></figure>
+        </div>
+        <div class="media-grid cols-2" style="margin-top:16px;">
+          <figure><img src="media/image22.png" alt="Castello static grid 1" loading="lazy"/><figcaption>Slide 13 · Static Post</figcaption></figure>
+          <figure><img src="media/image23.png" alt="Castello static grid 2" loading="lazy"/><figcaption>Slide 13 · Static Post</figcaption></figure>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Ads Library -->
+        <div class="sh-kicker" style="margin-bottom:14px;">Ads Library · აქტიური რეკლამა რეალურ დროში</div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Ads Library</h3>
+            <p>კომპანიას ამჟამად აქტიური რეკლამა არ აქვს.</p>
+          </div>
+          <div class="card">
+            <h3>საიტი GEO\ENG</h3>
+            <p><a href="https://castello.ge/ge/about/" target="_blank" rel="noopener">https://castello.ge/ge/about/</a></p>
+          </div>
+        </div>
+        <div class="media-grid cols-1"><figure><img src="media/image24.png" alt="Castello Ads Library" loading="lazy"/><figcaption>Slide 14 · Ads Library</figcaption></figure></div>
+
+      </div>
+    </section>
+
+    <!-- ================== 05 VIDEO CONTENT LINES ================== -->
+    <section id="content-lines">
+      <div class="section-head">
+        <div class="eyebrow">§ 05 / For UnionGeo</div>
+        <div class="sh-title">
+          <h2>Video Content.<br/><span class="serif">Content Lines</span> · For UnionGeo.</h2>
+          <p>დამონტაჟების პროცესი · მასალებზე საუბარი · დასრულებული პროექტი · Door Test.</p>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="media-hero"><img src="media/image25.png" alt="For UnionGeo · Video Content" loading="lazy"/></div>
+
+        <div class="hr"></div>
+
+        <!-- Content Lines overview -->
+        <div class="sh-kicker" style="margin-bottom:14px;">Content Lines</div>
+        <div class="media-grid cols-2">
+          <figure class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="Content Lines · For UnionGeo"><img src="media/image26.jpeg" alt="Content lines reference 1" loading="lazy"/><figcaption>Slide 16 · Content Lines</figcaption></figure>
+          <figure class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="Content Lines · For UnionGeo"><img src="media/image27.jpeg" alt="Content lines reference 2" loading="lazy"/><figcaption>Slide 16 · Content Lines</figcaption></figure>
+        </div>
+        <div class="opp-grid">
+          <div class="opp"><span class="n">/ 01</span><h4>დამონტაჟების პროცესი</h4><p>კარის მონტაჟის სრული პროცესის step by step აღწერა, Behind The Scene კადრები.</p></div>
+          <div class="opp"><span class="n">/ 02</span><h4>მასალებზე საუბარი</h4><p>უშუალოდ მასალებზე საუბარი, რისგანაც კარებები მზადდება, ექსპერტის გადმოსახედიდან.</p></div>
+          <div class="opp"><span class="n">/ 03</span><h4>დასრულებული პროექტი</h4><p>კლიენტის სახლში უკვე დამონტაჟებული კარის პროცესი, დიზაინზე და დეტალებზე ხაზგასმა.</p></div>
+          <div class="opp"><span class="n">/ 04</span><h4>Door Test</h4><p>კარის ხმის იზოლაციის ან ხარისხის დატესტვა რეალურ პირობებში.</p></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- 4 detailed video lines -->
+        <div class="sh-kicker" style="margin-bottom:14px;">4 ვიდეო ხაზი · დეტალურად</div>
+        <div class="tl">
+          <div class="tl-col">
+            <div class="phase"><span class="m">01</span><span class="t">დამონტაჟების პროცესი</span></div>
+            <span class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="01 · დამონტაჟების პროცესი" style="display:block;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);"><img src="media/image28.jpeg" alt="დამონტაჟების პროცესი" loading="lazy" style="display:block;width:100%;height:auto;"/></span>
+            <ul>
+              <li>იდეა: გადავიღებთ კარის მონტაჟის სრულ პროცესს, როგორ ხდება, რამდენი დრო სჭირდება, რა პირობებია საჭირო.</li>
+              <li>განხორციელება: ვიდეოში იქნება BTS კადრები, პარალელურად ილაპარაკებს ის ადამიანი, ვინც უშუალოდ მონტაჟის პროცესში იქნება ჩართული და თითოეულ ეტაპს ახსნის.</li>
+              <li>ფორმატი: Reels</li>
+              <li>ქრონომეტრაჟი: 40-60 წმ.</li>
+              <li>მიზანი: Sales/Engagement</li>
+            </ul>
+          </div>
+          <div class="tl-col">
+            <div class="phase"><span class="m">02</span><span class="t">დასრულებული პროექტი</span></div>
+            <span class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="02 · დასრულებული პროექტი" style="display:block;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);"><img src="media/image29.jpeg" alt="დასრულებული პროექტი" loading="lazy" style="display:block;width:100%;height:auto;"/></span>
+            <ul>
+              <li>იდეა: ინტერვიუს ხასიათის ვიდეო დასრულებულ პროექტიში, სადაც მთავარი აქცენტი იქნება კარის ხარისხზე, დიზაინზე და დეტალებზე.</li>
+              <li>განხორციელება: დამონტაჟებული კარის ვიზუალზე ხაზგასასმელად გადავიღებთ ვიდეოს, სადაც უშუალოდ მომხმარებელი ისაუბრებს მის დიზაინზე, რატო გააკეთა არჩევანი ამ კარზე და როგორ ერწყმის ინტერიერს. ან პროექტის ავტორი განიხილავს კონკრეტულ ინტერიერსა და მასთან კარის მნიშვნელობას.</li>
+              <li>ფორმატი: Reels</li>
+              <li>ქრონომეტრაჟი: 30-40 წმ.</li>
+              <li>მიზანი: Awareness</li>
+            </ul>
+          </div>
+          <div class="tl-col">
+            <div class="phase"><span class="m">03</span><span class="t">მასალებზე საუბარი</span></div>
+            <span class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="03 · მასალებზე საუბარი" style="display:block;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);"><img src="media/image30.jpeg" alt="მასალებზე საუბარი" loading="lazy" style="display:block;width:100%;height:auto;"/></span>
+            <ul>
+              <li>იდეა: უშუალოდ მასალებზე საუბარი, რისგანაც კარებები მზადდება, ექსპერტის გადმოსახედიდან.</li>
+              <li>განხორციელება: გადავიღებთ შოურუმში სხვადახსვა მასალებს, სადაც წარმომადგენელი პირი ისაუბრებს, უშუალოდ პროდუქტის შესახებ და წარმოაჩენს ბენეფიტებს გადასაფარი კადრებით.</li>
+              <li>ფორმატი: Reels</li>
+              <li>ქრონომეტრაჟი: 30-35 წმ</li>
+              <li>მიზანი: Sales</li>
+            </ul>
+          </div>
+          <div class="tl-col">
+            <div class="phase"><span class="m">04</span><span class="t">Door Test</span></div>
+            <span class="video-thumb" data-fb="https://www.facebook.com/uniongeo" data-caption="04 · Door Test" style="display:block;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);"><img src="media/image31.jpeg" alt="Door Test" loading="lazy" style="display:block;width:100%;height:auto;"/></span>
+            <ul>
+              <li>იდეა: კარის ხმის იზოლაციის, უხეშად დაკეტვის და ხარისხის დატესტვა რეალურ პირობებში.</li>
+              <li>განხორციელება: დამონტაჟებულ კართან გადავიღებთ Door Test-ს, კარის ძლიერად მოჯახუნებაზე, ხმის იზოლაციაზე და პარალელურად წარმომადგენელი პირი ისაუბრებს კარის გამძლეობასა და ხარისხზე</li>
+              <li>ფორმატი: Reels</li>
+              <li>ქრონომეტრაჟი: 30-40 წმ</li>
+              <li>მიზანი: Sales</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================== 06 რეკომენდაციები ================== -->
+    <section id="recommendations">
+      <div class="section-head">
+        <div class="eyebrow">§ 06 / რეკომენდაციები</div>
+        <div class="sh-title">
+          <h2>რეკომენდაციები.<br/><span class="serif">For UnionGeo.</span></h2>
+          <p>Video Content · For UnionGeo.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="ret-grid">
+          <div class="ret-card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12c2-4 6-7 9-7s7 3 9 7c-2 4-6 7-9 7s-7-3-9-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h4>01 · იტალიაში დამზადების პროცესი</h4>
+            <p>იტალიაში კარის დამზადების პროცესის ვდიეო ვოიოვერით;</p>
+          </div>
+          <div class="ret-card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M21 20c0-2-2-4-4-4"/></svg>
+            </div>
+            <h4>02 · იტალიელი დიზაინერი</h4>
+            <p>იტალიეილი დიაზაინერი შექმნილი ნამუშევრებზე;</p>
+          </div>
+          <div class="ret-card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            </div>
+            <h4>03 · პრეზენტაციები &amp; ოფინიონ ლიდერები</h4>
+            <p>როცა ექნებათ პრეზენტაციები და მსგავსი ტიპის შეხვედრები დიზაინერებთან თუ სფეროს ოფინიონ ლიდერებთან გადავიღოთ ვიდეოები და ვისაუბროთ;</p>
+          </div>
+          <div class="ret-card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2.5 6 6.5.5-5 4.5 1.5 6.5L12 16l-5.5 3.5L8 13 3 8.5 9.5 8z"/></svg>
+            </div>
+            <h4>04 · ბლოგები &amp; SEO</h4>
+            <p>საიტზე განვათავსოთ ბლოგები მომხმარებლისთვის საინტერესო ფაქტებზე შემდეგ კი გადმოვაზიაროთ ფბში და ვისაუბროთ მასზე, რომელიც SEO-ს გამარტვაშიც დაგვეხმარება.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== 07 META BUDGET ================== -->
+    <section id="meta-budget">
+      <div class="section-head">
+        <div class="eyebrow">§ 07 / Meta Ads</div>
+        <div class="sh-title">
+          <h2>ბიუჯეტის განაწილება.<br/><span class="serif">$1,800 / თვე.</span></h2>
+          <p>Meta Ads (Facebook &amp; Instagram) · UNION GEO · ბიუჯეტი: $1,800.</p>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <!-- Outcomes-style budget breakdown -->
+        <div class="outcomes">
+          <div class="outc"><div class="v accent">$1,800</div><div class="l">ბიუჯეტი</div><div class="sub">/ თვე</div></div>
+          <div class="outc"><div class="v">30%</div><div class="l">TOF</div><div class="sub">$540</div></div>
+          <div class="outc"><div class="v">20%</div><div class="l">MOF</div><div class="sub">$360</div></div>
+          <div class="outc"><div class="v">50%</div><div class="l">BOF</div><div class="sub">$900</div></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Funnel rows -->
+        <div class="sh-kicker" style="margin-bottom:14px;">TOF · MOF · BOF</div>
+        <div>
+          <div class="funnel"><div class="stage"><span class="label">TOF — Awareness</span><span class="count">$540 · 30%</span></div><div class="bar"><i style="width:30%"></i><span class="rate">30%</span></div><div class="channels">Reach / Video Views · ბრენდის ცნობადობა, lifestyle კონტენტი</div></div>
+          <div class="funnel"><div class="stage"><span class="label">MOF — Consideration</span><span class="count">$360 · 20%</span></div><div class="bar"><i style="width:20%"></i><span class="rate">20%</span></div><div class="channels">Engagement · პროდუქტის ხარისხი, განსხვავებულობა</div></div>
+          <div class="funnel"><div class="stage"><span class="label">BOF — Conversion</span><span class="count">$900 · 50%</span></div><div class="bar"><i style="width:50%"></i><span class="rate">50%</span></div><div class="channels">Messages · პირდაპირი კომუნიკაცია, შოურუმში მოწვევა · Retargeting + Lookalike აუდიტორიებით</div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================== 08 MESSAGING FLOW ================== -->
+    <section id="messaging-flow">
+      <div class="section-head">
+        <div class="eyebrow">§ 08 / Meta Ads</div>
+        <div class="sh-title">
+          <h2>Messaging Flow.</h2>
+          <p>TOF → MOF → BOF · Awareness → Engagement → Messages.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="crm">
+          <div class="crm-step"><span class="n">/ 01 · TOF</span><span class="t">Awareness</span><span class="d">Reach / Video Views · ბრენდის ცნობადობა, lifestyle კონტენტი</span></div>
+          <div class="crm-step"><span class="n">/ 02 · MOF</span><span class="t">Engagement</span><span class="d">პროდუქტის ხარისხი, განსხვავებულობა</span></div>
+          <div class="crm-step"><span class="n">/ 03 · BOF</span><span class="t">Messages</span><span class="d">პირდაპირი კომუნიკაცია, შოურუმში მოწვევა</span></div>
+          <div class="crm-step"><span class="n">/ 04 · BOF</span><span class="t">Retargeting</span><span class="d">Retargeting + Lookalike აუდიტორიებით</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== 09 CREATIVE & FORMATS ================== -->
+    <section id="creative">
+      <div class="section-head">
+        <div class="eyebrow">§ 09 / Meta Ads</div>
+        <div class="sh-title">
+          <h2>კრეატივი და ფორმატები.</h2>
+          <p>სასურველი შედეგების მისაღებად გვჭირდება კარგი ხარისხის ვიდეო და სტატიკური კონტენტი, რომელიც თანხვედრაში იქნება Meta-ს Andromeda-ს განახლებებთან. კონტენტი წარმოდგენილი უნდა იყოს სხვადასხვა ფორმატში.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="vprops">
+          <div class="vprop">
+            <h4>სტატიკური კონტენტი</h4>
+            <div class="sub">Feed &amp; Vertical</div>
+            <ol>
+              <li>Feed (1:1 / 4:5)</li>
+              <li>Vertical (9:16)</li>
+            </ol>
+          </div>
+          <div class="vprop">
+            <h4>ვიდეო კონტენტი</h4>
+            <div class="sub">Andromeda-თან თანხვედრაში</div>
+            <ol>
+              <li>ქრონომეტრაჟი: მაქს 40 წა</li>
+              <li>hook: პრიველ 3 წამში</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== 10 B2B ================== -->
+    <section id="b2b">
+      <div class="section-head">
+        <div class="eyebrow">§ 10 / Meta Ads</div>
+        <div class="sh-title">
+          <h2>B2B მიმართულება.</h2>
+          <p>რეკომენდაცია: ამ ეტაპზე B2B კამპანია გავაჩეროთ. განმეორებით ვცადოთ მას შემდეგ, რაც ეს სამი საკითხი გამოსწორდება.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="common-grid">
+          <div class="common-card">
+            <span class="bang">⚠ 01</span>
+            <h4>კრეატივების ნაკლებობა</h4>
+            <p>ამჟამად არ გვაქვს საკმარისი კრეატივები B2B მიმართულებისთვის - რაც გვაქვს, ისიც არ არის დამაკმაყოფილებელი ხარისხის.</p>
+          </div>
+          <div class="common-card">
+            <span class="bang">⚠ 02</span>
+            <h4>დროული კომუნიკაცია ლიდებთან</h4>
+            <p>შემოსული ლიდი სწრაფად უნდა დამუშავდეს. ამჟამად ეს პროცესი მოწესრიგებული არ არის და ლიდები იკარგება.</p>
+          </div>
+          <div class="common-card">
+            <span class="bang">⚠ 03</span>
+            <h4>შეფასების მექანიზმი</h4>
+            <p>გვჭირდება მარტივი სისტემა, რომლითაც შევძლებთ სეილსმენის კომუნიკაციის ხარისხის შეფასებას - ლიდთან საუბრის შემდეგ.</p>
+          </div>
+          <div class="common-card">
+            <span class="bang">→ რეკომენდაცია</span>
+            <h4>B2B კამპანია გავაჩეროთ</h4>
+            <p>ამ ეტაპზე B2B კამპანია გავაჩეროთ. განმეორებით ვცადოთ მას შემდეგ, რაც ეს სამი საკითხი გამოსწორდება.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== FOOTER / CTA ================== -->
+    <footer id="contact">
+      <div style="max-width: var(--maxw); margin: 0 auto 48px; border-radius: var(--radius); overflow: hidden;"><img src="media/image32.jpeg" alt="მადლობა ყურადღებისთვის" loading="lazy" style="display:block;width:100%;height:auto;"/></div>
+      <div class="ft-top">
+        <div>
+          <h3>მადლობა<br/><em>ყურადღებისთვის.</em></h3>
+          <div class="ft-row">
+            <a class="btn accent" href="#top">↑  Back to top</a>
+          </div>
+        </div>
+        <div class="meta">
+          <div>For UNIONGEO</div>
+          <div>PRESENTATION BY GROWTH HUNTERS</div>
+          <div>2026</div>
+        </div>
+        <div class="meta">
+          <div>Meta Ads (Facebook &amp; Instagram)</div>
+          <div>ბიუჯეტი: $1,800 / თვე</div>
+          <div>TOF 30% · MOF 20% · BOF 50%</div>
+          <div style="margin-top:14px;">↗ <a href="#top">Back to top</a></div>
+        </div>
+      </div>
+      <div class="credit">
+        <div>© 2026 · PRESENTATION BY GROWTH HUNTERS · For UNIONGEO</div>
+        <div>Press <span class="kbd" style="background:transparent;border-color:currentColor;color:currentColor;">T</span> to open tweaks · <span class="kbd" style="background:transparent;border-color:currentColor;color:currentColor;">D</span> for dark mode</div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- Lightbox -->
+<div class="lb-overlay" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="lb-box">
+    <img id="lb-img" src="" alt=""/>
+    <div class="lb-foot">
+      <div class="lb-cap" id="lb-cap"></div>
+      <div class="lb-actions">
+        <a class="lb-fb" id="lb-fb" href="#" target="_blank" rel="noopener">→ Watch on Facebook</a>
+        <button class="lb-close" id="lb-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tweaks panel -->
+<div class="tweaks-panel" id="tweaks">
+  <h5>Tweaks</h5>
+  <div class="tweak-row">
+    <label>Theme</label>
+    <div class="opts" data-tweak="theme">
+      <button data-v="light">Light</button>
+      <button data-v="dark">Dark</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Density</label>
+    <div class="opts" data-tweak="density">
+      <button data-v="comfortable">Comfy</button>
+      <button data-v="compact">Compact</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Accent</label>
+    <div class="opts" data-tweak="accent" style="gap:6px;">
+      <button class="color-swatch" data-v="#4F46E5" style="background:#4F46E5;"></button>
+      <button class="color-swatch" data-v="#0A0A0A" style="background:#0A0A0A;"></button>
+      <button class="color-swatch" data-v="#B91C1C" style="background:#B91C1C;"></button>
+      <button class="color-swatch" data-v="#0E7A4D" style="background:#0E7A4D;"></button>
+      <button class="color-swatch" data-v="#D97706" style="background:#D97706;"></button>
+    </div>
+  </div>
+  <div style="padding-top:10px; border-top: 1px dashed var(--line); font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted);">
+    Toggle anytime · <span class="kbd">T</span>
+  </div>
+</div>
+
+<script>
+  // ——————————————————— Tweaks ———————————————————
+  const state = { ...TWEAKS };
+  const body = document.body;
+  const panel = document.getElementById('tweaks');
+
+  function applyState() {
+    body.setAttribute('data-theme', state.theme);
+    body.setAttribute('data-density', state.density);
+    document.documentElement.style.setProperty('--accent', state.accent);
+    document.documentElement.style.setProperty('--accent-soft', `color-mix(in oklab, ${state.accent} 12%, transparent)`);
+    document.documentElement.style.setProperty('--accent-ink', `color-mix(in oklab, ${state.accent} 85%, black)`);
+    // Update swatches & buttons active state
+    panel.querySelectorAll('[data-tweak]').forEach(group => {
+      const key = group.dataset.tweak;
+      group.querySelectorAll('button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.v === state[key]);
+      });
+    });
+  }
+
+  panel.querySelectorAll('[data-tweak]').forEach(group => {
+    const key = group.dataset.tweak;
+    group.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state[key] = btn.dataset.v;
+        applyState();
+        try {
+          window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]: btn.dataset.v}}, '*');
+        } catch(e){}
+      });
+    });
+  });
+
+  // Listen for edit-mode messages
+  window.addEventListener('message', (e) => {
+    const d = e.data || {};
+    if (d.type === '__activate_edit_mode') panel.classList.add('open');
+    else if (d.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){}
+
+  // Keyboard shortcuts
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 't' || e.key === 'T') panel.classList.toggle('open');
+    if (e.key === 'd' || e.key === 'D') {
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      applyState();
+    }
+  });
+
+  applyState();
+
+  // ——————————————————— Lightbox for video thumbs ———————————————————
+  (function () {
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCap = document.getElementById('lb-cap');
+    const lbFb  = document.getElementById('lb-fb');
+    const lbClose = document.getElementById('lb-close');
+
+    function openLb(src, cap, fb) {
+      lbImg.src = src;
+      lbImg.alt = cap || '';
+      lbCap.textContent = cap || '';
+      lbFb.href = fb || 'https://www.facebook.com/';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLb() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+    lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+
+    document.querySelectorAll('.video-thumb').forEach(el => {
+      const img = el.querySelector('img');
+      if (!img) return;
+      if (!el.querySelector('.play-btn')) {
+        const btn = document.createElement('span');
+        btn.className = 'play-btn';
+        el.appendChild(btn);
+      }
+      el.addEventListener('click', () => {
+        openLb(img.src, el.dataset.caption || img.alt || '', el.dataset.fb || 'https://www.facebook.com/');
+      });
+    });
+  })();
+
+  // ——————————————————— Reveal on scroll ———————————————————
+  const revealEls = [
+    ...document.querySelectorAll('section > .container > *, .hero-stats, .section-head')
+  ];
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // ——————————————————— Scroll spy ———————————————————
+  const links = [...document.querySelectorAll('.sidenav a[data-section]')];
+  const sections = links.map(a => document.getElementById(a.dataset.section)).filter(Boolean);
+  function spy() {
+    const y = window.scrollY + 140;
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= y) current = s;
+    }
+    links.forEach(a => a.classList.toggle('active', a.dataset.section === current?.id));
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  spy();
+</script>
+</body>
+</html>
